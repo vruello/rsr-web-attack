@@ -1,6 +1,6 @@
 <?php
 
-$conn = new mysqli("localhost", "root", "root");
+$conn = new mysqli("localhost", "exo1", "mdpexo1");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -38,7 +38,7 @@ function display_entry($username, $password, $true_username, $true_password) {
 
 function try_connect($username, $password) {
 	$dbname = "injectionSQL1";
-	$conn = new mysqli("localhost", "root", "root", $dbname);
+	$conn = new mysqli("localhost", "exo1", "mdpexo1", $dbname);
 
 	if ($conn->connect_error) {
     	die("Connection failed: " . $conn->connect_error);
@@ -47,7 +47,10 @@ function try_connect($username, $password) {
 	$sql = "SELECT username, password FROM users WHERE username='" . $username ."' AND password='" . $password . "';";
 	$result = $conn->query($sql);
 
+	//echo $sql . "<br>";
+
 	if(!$result) {
+		//echo $conn->error;
 		$conn->close();
 	}
 	else {
