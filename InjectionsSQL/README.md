@@ -23,8 +23,11 @@ sudo mysql
 CREATE DATABASE injectionSQL1;
 SHOW DATABASES;
 
-GRANT ALL PRIVILEGES ON example.* TO 'exo1'@'localhost' IDENTIFIED BY 'exo1';
-FLUSH PRIVILEGES;
+#CREATE USER 'exo1'@'localhost' IDENTIFIED BY 'mdpexo1';
+#FLUSH PRIVILEGES;
+#GRANT ALL PRIVILEGES ON injectionSQL1.* TO 'exo1'@'localhost';
+#QUIT;
+#mysql -u exo1 -p;
 
 #On ouvre la BDD
 USE injectionSQL1;
