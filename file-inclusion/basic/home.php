@@ -1,3 +1,3 @@
 <h1>Home</h1>
 
-<p>Welcome on my super website!</p>
+<h3 style="text-align: center">Goal: Find the machine users.</h3>
