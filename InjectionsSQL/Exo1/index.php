@@ -50,11 +50,7 @@ function try_connect($username, $password) {
 	//echo $sql . "<br>";
 
 	if(!$result) {
-<<<<<<< HEAD
-		echo "<h3><font color='green'>Error : no such user/password</font></h3><br>";
-=======
 		//echo $conn->error;
->>>>>>> 9777371b783b91cb2a0e1cfdcd0cffcdcfe1c15f
 		$conn->close();
 	}
 	else {
