@@ -1,0 +1,7 @@
+Si on ne remplit pas les 2 champs, il ne se passe rien.
+Si on remplit les deux champs avec des valeurs invalides, la page nous renvoie une erreur.
+Il n'y a pas d'injection possible dans le champ "password".
+L'injection ("test' or 1=1; -- ", "test") affiche l'identifiant et le password du premier user de la table username.
+L'injection ("admin'; -- ", "test") affiche l'identifiant et le password de l'administrateur de la table.
+On peut alors regarder le code source de la page pour voir le password de l'admin en clair.
+On rentre ainsi le username "admin" et le password de l'admin pour finir le challenge.
