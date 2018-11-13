@@ -48,14 +48,18 @@ function try_connect($username, $password) {
 	$result = $conn->query($sql);
 
 	if(!$result) {
+		echo "<h3><font color='green'>Error : no such user/password</font></h3><br>";
 		$conn->close();
 	}
 	else {
 		$row = $result->fetch_assoc();
 		$keys = array_keys($row);
 		$n = count($keys);
-		if($n != 0){
+		if($n != 0) {
 			display_entry($username, $password, $row[$keys[0]], $row[$keys[1]]);
+		}
+		else {
+			echo "<h3><font color='red'>Error : no such user/password</font></h3><br>";
 		}
 		$conn->close();		
 	}
