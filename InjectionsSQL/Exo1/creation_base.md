@@ -26,6 +26,13 @@ GRANT SELECT ON *.* TO 'exo1'@'localhost' IDENTIFIED BY 'mdpexo1';
 QUIT;
 sudo systemctl restart mysql
 
+#Création d'un admin
+create user 'admin'@'localhost' identified by 'mdpadmin';
+flush privileges;
+grant all privileges on *.* to 'admin'@'localhost' identified by 'mdpadmin';
+quit;
+sudo systemctl restart mysql
+
 #Création de la BDD
 CREATE DATABASE injectionSQL1;
 SHOW DATABASES;
@@ -56,7 +63,7 @@ sudo mysqldump -u root injectionSQL1 > injectionSQL1.sql
 sudo mv injectionSQL1.sql /var/www/html/Exo1/
 
 ```
-
+##Autre
 
 ```bash
 #Adresse de la BDD
