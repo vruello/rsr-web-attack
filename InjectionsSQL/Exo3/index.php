@@ -18,11 +18,13 @@ if ($conn->connect_error) {
 
 <?php
 
-if(!empty($_GET['username']))
+if(!empty($_GET['id']))
 {
-    $username = mysqli_real_escape_string($conn, $_GET['username']);
-    $sql = "SELECT username FROM users WHERE username='". $username . "';";
+    $id = mysqli_real_escape_string($conn, $_GET['id']);
+    $sql = "SELECT id, username FROM users WHERE id=". $id . ";";
+    echo $sql;
     $result = $conn->query($sql);
+    //id=-1 UNION SELECT 1,2 FROM users WHERE 1=1
 
     if(mysqli_num_rows($result) == 1)
     {
@@ -41,7 +43,7 @@ if(!empty($_GET['username']))
 <form action="" method="get">
 	Nom de l'utilisateur
 	<br>
-	<input type="text" name="username">
+	<input type="text" name="id">
 	<input type="submit" value="Vérifier">
 </form>
 
