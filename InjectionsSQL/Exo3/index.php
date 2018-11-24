@@ -22,31 +22,38 @@ if(!empty($_GET['id']))
 {
     $id = mysqli_real_escape_string($conn, $_GET['id']);
     $sql = "SELECT id, username FROM users WHERE id=". $id . ";";
-    echo $sql;
+    //echo $sql;
     $result = $conn->query($sql);
-    //id=-1 UNION SELECT 1,2 FROM users WHERE 1=1
+    $row = $result->fetch_assoc();
+    $keys = array_keys($row);
 
     if(mysqli_num_rows($result) == 1)
     {
-        echo "<p><font color='red'>Utilisateur existant.</font></p>";
+        echo "<p><font color='red'>Utilisé</font></p>";
     }
     else
     {
-        echo "<p><font color='green'>Utilisateur inexistant.</font></p>";
+        echo "<p><font color='green'>Libre</font></p>";
     }
 }
 ?>
 
 
-<h3>Types de projets</h3>
+<h3>Vérifier si un identifiant est déjà utilisé</h3>
 
 <form action="" method="get">
-	Nom de l'utilisateur
-	<br>
-	<input type="text" name="id">
-	<input type="submit" value="Vérifier">
+    ID de l'utilisateur
+    <br>
+    <input type="number" name="id">
+    <input type="submit" value="Chercher">
 </form>
 
+<br><br>
+<h4>Indications</h4>
+
+<p>
+La table "users" contient les champs "id", "username" et "password".
+</p>
 
 </body>
 

