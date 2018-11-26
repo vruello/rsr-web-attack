@@ -1,12 +1,16 @@
 CREATE DATABASE Scenario1;
 
+USE Scenario1;
+
 CREATE TABLE users
 		(
 			id_users 	INT NOT NULL AUTO_INCREMENT,
 			username 	VARCHAR(20) NOT NULL,
 			password 	VARCHAR(50) NOT NULL,
 			email 		VARCHAR(50),
-			type 		INT NOT NULL,
+			firstname	VARCHAR(20) NOT NULL,
+			lastname 	VARCHAR(20) NOT NULL,
+			job		VARCHAR(20) NOT NULL,
 			PRIMARY KEY 	(id_users)
 		);
 
@@ -21,18 +25,11 @@ CREATE TABLE students
 CREATE TABLE classes
 		(
 			id_classes 	INT NOT NULL AUTO_INCREMENT,
+			id_users	INT NOT NULL,
 			name	 	VARCHAR(20) NOT NULL,
 			code 		VARCHAR(10) NOT NULL,
 			PRIMARY KEY	(id_classes)
-		);
-
-CREATE TABLE personnels
-		(
-			id_personnels 	INT NOT NULL AUTO_INCREMENT,
-			firstname	VARCHAR(20) NOT NULL,
-			lastname 	VARCHAR(20) NOT NULL,
-			job		VARCHAR(20) NOT NULL,
-			PRIMARY KEY	(id_personnels)
+			FOREIGN KEY 	(id_users) 	REFERENCES users(id_users),
 		);
 
 CREATE TABLE news
