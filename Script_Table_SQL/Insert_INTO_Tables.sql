@@ -26,4 +26,6 @@ INSERT INTO students (firstname, lastname) VALUES ('Cel', 'Ery');
 -- INSERT INTO grades (id_classes, id_students, grade) VALUES ( 1, 5, 20);
 -- INSERT INTO grades (id_classes, id_students, grade) VALUES ( 2, 5, 20);
 
-INSERT INTO news (title, content, date) VALUES ('Breaking news', 'Hello this is a message to all the teachers, please use Cyber in your classes.', '2018-11-10');
+INSERT INTO news (title, content, date) VALUES ('Cybernews', 'Hello this is a message to all the teachers, please use Cyber in all your classes.', '2018-11-10');
+INSERT INTO news (title, content, date) VALUES ('Hack-it-n 2018 bis', 'The best cyberconference! Don''t miss it!', '2018-11-24');
+INSERT INTO news (title, content, date) VALUES ('A new big server', 'As the current RSR server was feeling lonely, Mr.Touftouf bought a brand new great server to keep him company. This server was obviously not cheap but Touftouf thought it was worth it.', '2018-11-26');
