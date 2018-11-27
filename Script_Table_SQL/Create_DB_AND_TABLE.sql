@@ -5,8 +5,8 @@ USE Scenario1;
 CREATE TABLE users
 		(
 			id_users 	INT NOT NULL AUTO_INCREMENT,
-			username 	VARCHAR(20) NOT NULL,
-			password 	VARCHAR(50) NOT NULL,
+			username 	VARCHAR(20) NOT NULL UNIQUE,
+			password 	VARCHAR(64) NOT NULL,
 			email 		VARCHAR(50),
 			firstname	VARCHAR(20) NOT NULL,
 			lastname 	VARCHAR(20) NOT NULL,
