@@ -1,0 +1,15 @@
+/* Students table - auto increment */
+table.users {
+	counter-reset: tableCount;
+  }
+
+.counterCell:before {
+content: counter(tableCount);
+counter-increment: tableCount;
+}
+  
+
+h1 {
+	margin-bottom: 30px;
+	margin-top: 15px;
+}

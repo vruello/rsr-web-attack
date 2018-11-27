@@ -28,14 +28,14 @@ CREATE TABLE classes
 			id_users	INT NOT NULL,
 			name	 	VARCHAR(20) NOT NULL,
 			code 		VARCHAR(10) NOT NULL,
-			PRIMARY KEY	(id_classes)
-			FOREIGN KEY 	(id_users) 	REFERENCES users(id_users),
+			PRIMARY KEY	(id_classes),
+			FOREIGN KEY (id_users) 	REFERENCES users(id_users)
 		);
 
 CREATE TABLE news
 		(
 			id_news 	INT NOT NULL AUTO_INCREMENT,
-			author		VARCHAR(20) NOT NULL,
+			title 		VARCHAR(100) NOT NULL,
 			content 	VARCHAR(200) NOT NULL,
 			date		DATE,
 			PRIMARY KEY	(id_news)
@@ -50,4 +50,3 @@ CREATE TABLE grades
 			FOREIGN KEY 	(id_classes) 	REFERENCES classes(id_classes),
 			FOREIGN KEY 	(id_students) 	REFERENCES students(id_students)
 		);
-

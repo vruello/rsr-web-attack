@@ -41,7 +41,7 @@ class Router {
 	}
 
 
-	public function access_denied() {
+	public function access_denied(App $app) {
 		require(__DIR__ . '/../' . $this->access_denied_page);
 	}
 
@@ -73,5 +73,9 @@ class Router {
 		}
 		
 		return $url;
+	}
+
+	public function current() {
+		return $this->current_page;
 	}
 }

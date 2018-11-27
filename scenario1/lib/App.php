@@ -25,7 +25,7 @@ class App {
 
 		// Check authorization
 		if (!$this->auth->authorize($request)) {
-			$this->router->access_denied();
+			$this->router->access_denied($this);
 		}
 		else {
 			$this->execute($request);

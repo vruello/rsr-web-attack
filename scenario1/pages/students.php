@@ -21,10 +21,15 @@ $req->closeCursor();
 $order = $app->request()->get('order');
 ?>
 
+<?php include('layout/header.php'); ?>
+<?php include('layout/nav.php'); ?>
+
+<div class="container">
+
 <h1>Classes Name : <?php echo $name;?></h1>
 <h2>Classes Code : <?php echo $code;?></h2>
 
-<table>
+<table class="users">
     <thead>
     <tr>
         <th>#</th>
@@ -53,7 +58,7 @@ $order = $app->request()->get('order');
 	}
                 
 
-    foreach ($app->db()->con()->query($students)->fetchAll() as $student) {
+    foreach ($app->db()->con()->query($students) as $student) {
         ?>
         <tr>
             <th class="counterCell"></th>
@@ -68,3 +73,7 @@ $order = $app->request()->get('order');
 
 <a href="<?= $app->router()->url(null, ['code' => $code, 'order' => 'asc']) ?>">ASC</a>
 <a href="<?= $app->router()->url(null, ['code' => $code, 'order' => 'desc']) ?>">DESC</a>
+
+</div>
+
+<?php include('layout/footer.php'); ?>

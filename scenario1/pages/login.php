@@ -14,6 +14,11 @@ if ($app->request()->post('username') && $app->request()->post('password')) {
 ?>
 
 
+<?php include('layout/header.php'); ?>
+<?php include('layout/nav.php'); ?>
+
+
+<div class="container">
 <h1>Login</h1>
 
 <?php if ($res === false): ?>
@@ -38,3 +43,5 @@ if ($app->request()->post('username') && $app->request()->post('password')) {
 
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</div>
+<?php include('layout/footer.php'); ?>
