@@ -8,7 +8,7 @@ var page = require('webpage').create();
 //   height: 1920
 // };
 
-page.open('http://localhost/scenario1/public/?p=login', 'POST', 'username=Salmon&password=internal', function(status) {
+page.open('http://localhost/scenario1/public/?p=login', 'POST', 'username=Salmon&password=+B3p3n_u$XQWqzxw', function(status) {
   console.log("http://localhost/scenario1/public/?p=login. Status: " + status);
   // page.render('login.png');
 });

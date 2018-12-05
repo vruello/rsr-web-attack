@@ -2,7 +2,7 @@
 
 $config['router'] = [
 	'routes' => [
-		// Page name => [<page code path>, minimum role, maximum role]
+		// Page name => [<page code path>, [<authorized roles>]]
 		'home' => ['pages/home.php', 
 			[
 				$config['roles']['GUEST'], 
