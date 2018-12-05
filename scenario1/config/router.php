@@ -2,12 +2,39 @@
 
 $config['router'] = [
 	'routes' => [
-		// Page name => [<page code path>, allowed for anonymous users, allowed for authenticated users]
-		'home' => ['pages/home.php', true, true],
-		'students' => ['pages/students.php', false, true],
-		'add_news' => ['pages/add_news.php', false, true],
-		'login' => ['pages/login.php', true, false],
-		'logout' => ['pages/logout.php', true, true],
+		// Page name => [<page code path>, minimum role, maximum role]
+		'home' => ['pages/home.php', 
+			[
+				$config['roles']['GUEST'], 
+				$config['roles']['STUDENT'], 
+				$config['roles']['TEACHER'], 
+				$config['roles']['COMMUNICATION'], 
+				$config['roles']['SECRETARY'], 
+				$config['roles']['ADMIN']]
+			],
+		'students' => ['pages/students.php', 
+			[
+				$config['roles']['TEACHER']]
+			],
+		'add_news' => ['pages/add_news.php', 
+			[
+				$config['roles']['COMMUNICATION']]
+			],
+		'login' => ['pages/login.php', 
+			[
+				$config['roles']['GUEST']]
+			],
+		'logout' => ['pages/logout.php', [
+			$config['roles']['GUEST'], 
+			$config['roles']['STUDENT'], 
+			$config['roles']['TEACHER'], 
+			$config['roles']['COMMUNICATION'], 
+			$config['roles']['SECRETARY'], 
+			$config['roles']['ADMIN']]
+			],
+		'upload_marks' => ['pages/upload_marks.php', [
+			$config['roles']['SECRETARY']]
+			]
 	],
 	'default' => 'home',
 	'not_found_page' => 'pages/not_found.php',

@@ -2,10 +2,11 @@
 
 class App {
 
+	public $config;
+
 	private $db;
 	private $router;
 	private $auth;
-	private $config;
 	private $request;
 
 	public function __construct($config) {
@@ -24,7 +25,7 @@ class App {
 		$request = $this->router->parse();
 
 		// Check authorization
-		if (!$this->auth->authorize($request)) {
+		if (!$this->auth->authorize($request->route())) {
 			$this->router->access_denied($this);
 		}
 		else {
@@ -47,7 +48,7 @@ class App {
 	}
 
 	private function bootstrap_authentication_manager() {
-		$this->auth = new AuthenticationManager($this->db);
+		$this->auth = new AuthenticationManager($this->db, $this->config['roles']);
 	}
 
 	public function db() {

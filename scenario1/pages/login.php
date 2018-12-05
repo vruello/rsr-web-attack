@@ -22,7 +22,7 @@ if ($app->request()->post('username') && $app->request()->post('password')) {
 <h1>Login</h1>
 
 <?php if ($res === false): ?>
-<div>
+<div class="alert alert-danger">
 	Echec de la connexion
 </div>
 <?php endif; ?>

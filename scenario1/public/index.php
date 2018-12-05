@@ -3,6 +3,7 @@
 session_start();
 
 require(__DIR__ . '/../config/database.php');
+require(__DIR__ . '/../config/roles.php'); // roles must be before rooter
 require(__DIR__ . '/../config/router.php');
 
 // Auto load classes

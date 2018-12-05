@@ -4,10 +4,12 @@ class AuthenticationManager {
 	
 	private $db;
 	private $user;
+	private $roles;
 
-	function __construct(Database $db) {
+	function __construct(Database $db, $roles) {
 		$this->db = $db;	
 		$this->user = null;
+		$this->roles = $roles;
 	}
 
 	public function login($username, $password) {
@@ -64,23 +66,25 @@ class AuthenticationManager {
 		return false;
 	}
 	
-	public function authorize(Request $request) {
-		$route = $request->route();
-
-		$allow_guest = $route[1];
-		$allow_authenticated = $route[2];
-
+	public function authorize($route) {
+		$allowed = $route[1];
 		$authenticated = $this->load_user();
 
-		if ($authenticated && $allow_authenticated || !$authenticated && $allow_guest) {
-			return true;
-		}
+		if (!$authenticated)
+			return (boolean) in_array($this->roles['GUEST'], $allowed);
+
+		$role = $this->user['role'];
 		
-		return false;
+		return (boolean) in_array($role, $allowed);
 	}
+
 
 	public function user() {
 		return $this->user;
+	}
+
+	public function getUserRole() {
+		return array_search($this->user['role'], $this->roles);
 	}
 
 }

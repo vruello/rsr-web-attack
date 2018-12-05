@@ -1,8 +1,8 @@
-INSERT INTO users (username, password, email, firstname, lastname, job) VALUES ('admin1', '25f43b1486ad95a1398e3eeb3d83bc4010015fcc9bedb35b432e00298d5021f7', 'admin@admin.fr', 'Be', 'Ef', 'DBAdmin');
-INSERT INTO users (username, password, email, firstname, lastname, job) VALUES ('Chicken', '25f43b1486ad95a1398e3eeb3d83bc4010015fcc9bedb35b432e00298d5021f7', 'chicken@professor.fr', 'Chic', 'Ken', 'RSR Teacher');
-INSERT INTO users (username, password, email, firstname, lastname, job) VALUES ('Veal', '25f43b1486ad95a1398e3eeb3d83bc4010015fcc9bedb35b432e00298d5021f7', 'veal@professor.fr', 'Ve', 'Al', 'English Teacher');
-INSERT INTO users (username, password, email, firstname, lastname, job) VALUES ('Salmon', '25f43b1486ad95a1398e3eeb3d83bc4010015fcc9bedb35b432e00298d5021f7', 'salmon@secretary.fr', 'Sal', 'Mon', 'Secretary');
-INSERT INTO users (username, password, email, firstname, lastname, job) VALUES ('Lobster', '25f43b1486ad95a1398e3eeb3d83bc4010015fcc9bedb35b432e00298d5021f7', 'lobster@communication.fr', 'Lob', 'Ster', 'Communication');
+INSERT INTO users (username, password, email, firstname, lastname, job, role) VALUES ('admin', 'b4014495417aab72e29a27a9ed575661f9548e4afafd6bc89358a11eb6d10448', 'admin@admin.fr', 'Be', 'Ef', 'DBAdmin', 5);
+INSERT INTO users (username, password, email, firstname, lastname, job, role) VALUES ('chicken', '3cc0d19efcd08f1df0ee3f85dae125199f650a43bdefbdfb700a647a176e53ed', 'chicken@professor.fr', 'Chic', 'Ken', 'RSR Teacher', 2);
+INSERT INTO users (username, password, email, firstname, lastname, job, role) VALUES ('veal', '41d17ef2180de7e03cafca4e0d1a75330866981b602ec4424bdff79da8708b47', 'veal@professor.fr', 'Ve', 'Al', 'English Teacher', 2);
+INSERT INTO users (username, password, email, firstname, lastname, job, role) VALUES ('salmon', '12c851ea6444131aeec94527411063f45af8a122812a46e83fd4b3e15bd8a5b9', 'salmon@secretary.fr', 'Sal', 'Mon', 'Secretary', 4);
+INSERT INTO users (username, password, email, firstname, lastname, job, role) VALUES ('lobster', '8f0e2f76e22b43e2855189877e7dc1e1e7d98c226c95db247cd1d547928334a9', 'lobster@communication.fr', 'Lob', 'Ster', 'Communication', 3);
 
 
 INSERT INTO students (firstname, lastname) VALUES ('Tom', 'Ate');
@@ -12,8 +12,8 @@ INSERT INTO students (firstname, lastname) VALUES ('Car', 'Rot');
 INSERT INTO students (firstname, lastname) VALUES ('Cel', 'Ery');
 
 
-INSERT INTO classes (id_users, name, code) VALUES (1, 'Cyber-RSR', 'RSR-42');
-INSERT INTO classes (id_users, name, code) VALUES (1, 'Cyber-English', 'ENG-30');
+INSERT INTO classes (id_users, name, code) VALUES (2, 'Cyber-RSR', 'RSR-42');
+INSERT INTO classes (id_users, name, code) VALUES (3, 'Cyber-English', 'ENG-30');
 
 INSERT INTO grades (id_classes, id_students, grade) VALUES ( 1, 1, 15);
 INSERT INTO grades (id_classes, id_students, grade) VALUES ( 2, 1, 18);

@@ -5,6 +5,7 @@ class Request {
 	private $route;
 	private $_get = array();
 	private $_post = array();
+	private $_file = array();
 
 	function __construct() {
 		foreach ($_GET as $key => $value) {
@@ -15,8 +16,9 @@ class Request {
 			$this->_post[$key] = $value;
 		}
 
-		$_GET = null;
-		$_POST = null;
+		foreach ($_FILES as $key => $value) {
+			$this->_file[$key] = $value;
+		}
 	}
 
 	private function load_parameter($key, $table) {
@@ -33,6 +35,10 @@ class Request {
 	
 	public function post($key) {
 		return $this->load_parameter($key, $this->_post);
+	}
+
+	public function file($key) {
+		return $this->load_parameter($key, $this->_file);
 	}
 
 	public function setRoute($route) {

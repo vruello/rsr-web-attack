@@ -11,6 +11,7 @@ CREATE TABLE users
 			firstname	VARCHAR(20) NOT NULL,
 			lastname 	VARCHAR(20) NOT NULL,
 			job		VARCHAR(20) NOT NULL,
+			role	TINYINT,
 			PRIMARY KEY 	(id_users)
 		);
 
