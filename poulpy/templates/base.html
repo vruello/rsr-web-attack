@@ -1,0 +1,23 @@
+{% block head %}
+{% include "head.html" %}
+{% endblock %}
+
+<body>
+
+<div id="app-wrap">
+    <div id="main">
+        {% block header %}
+        {% include "header.html" %}
+        {% endblock %}
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+{% block footer %}
+{% include "footer.html" %}
+<script src="../static/js/jquery.js"></script>
+<!--<script src="../static/js/cookieDeleter.js"></script>-->
+<!--<script src="../static/js/script.js"></script>-->
+<script src="../static/js/loader.js"></script>
+{% endblock %}
+</body>

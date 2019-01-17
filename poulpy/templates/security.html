@@ -1,0 +1,130 @@
+{% include "head.html" %}
+<link href="static/css/cfb511aef1aa64bc.css" rel="stylesheet">
+
+<body id="login" class="en-us">
+
+<div id="head" class="navbar navbar-fixed-top navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="fa fa-bars fa-15x"></span>
+            </button>
+            <img src="static/images/logo.png" height="64">
+        </div>
+        <div class="nav-desktop">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="login" href="{{ url_for('index') }}">Log In</a></li>
+                <li><a class="btn btn-primary signup" href="#">Sign Up</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="top-hover about-hover">
+                    <a>About<span class="caret"></span></a>
+                    <ul class="nav navbar-nav nav-about">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a>
+                        </li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Charts</a></li>
+                <li class="top-hover help-hover">
+                    <a>Help<span class="caret"></span></a>
+                    <ul class="nav navbar-nav nav-help">
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Trading Guide</a></li>
+                        <li><a href="#">Fees</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Contact</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="content generic-no-header">
+    <div class="container">
+        <div class="form-wrap">
+            <div class="text-center">
+                <h3 class="text-uppercase">Authentificator</h3>
+                <div class="vmarg-top-40">
+                    <div class="well well-lg"><h4>{{ number }}</h4></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 table">
+                <div class="tentacles text-center tcell">
+                    <div class=""></div>
+                    <img src="/static/images/poulpy_white.png">
+                    <a class="text-lowercase bold-light legendary" href="#">Be Legendary</a>
+                    <p id="copy">Copyright &copy; 2019 | Poulpy RSR</p>
+                </div>
+                <div class="account tcell">
+                    <div class="bold-sm text-uppercase">Account</div>
+                    <ul>
+                        <li><a href="#">Log In</a></li>
+                        <li><a href="#">Sign Up</a></li>
+                    </ul>
+                </div>
+                <div class="about tcell">
+                    <div class="bold-sm text-uppercase">About</div>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a>
+                        </li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact</a>
+                        </li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Privacy Notice</a></li>
+                    </ul>
+                </div>
+                <div class="resources tcell">
+                    <div class="bold-sm text-uppercase">Resources</div>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Charts</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Fees</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Trading Guide</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">PGP Key</a></li>
+                        <li><a href="#">Audit</a></li>
+                        <li><a href="#">Bug Bounty</a></li>
+                    </ul>
+                </div>
+                <div class="lang-selector tcell">
+                    <div class="bold-sm text-uppercase">Language</div>
+                    <div class="lang-select">
+                        <select name="languages" autocomplete=&quot;off&quot; class=&quot;btn btn-default&quot;>
+                            <option value="en-us" selected>English (US)</option>
+                            <option value="en-gb">English (GB)</option>
+                            <option value="ja-jp">Japanese</option>
+                        </select>
+                    </div>
+                    <div class="social">
+                        <a href="#" class="fa-twitter fa fa-15x"></a>
+                        <a href="#" class="fa-linkedin fa fa-15x"></a>
+                        <a href="#" class="fa-facebook-square fa fa-15x"></a>
+                        <a href="#" class="fa-github fa fa-15x"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+

@@ -1,0 +1,462 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container page-wrap">
+    <div class="clearfix">
+        <div id="account-tab-data" class="pull-right multiline">
+            <div class="ib">
+                <div>
+                    <span class="muted2 key">Current time:</span>
+                    <span id="local-clock" class="val"></span>
+                </div>
+                <div>
+                    <span class="muted2 key">Last Updated:</span>
+                    <span class="order-data-lastupdate val manrefresh-last"></span>
+                </div>
+            </div>
+            <div class="ib hpad20left top">
+                <button class="manrefresh-btn btn" autocomplete="off" title="Refresh Data"><i
+                        class="icon icon-refresh icon-white"></i><img class="hidden2 spinner"
+                                                                      src="/static/images/spinner-white.gif"
+                                                                      alt=""/>
+                </button>
+            </div>
+        </div>
+        <ul class="nav nav-tabs spaced5 " id="account-nav">
+            <li class="active">
+                <a href="{{ url_for('trade') }}"><i class="icon-retweet"></i> Trade</a>
+            </li>
+            <li class="">
+                <a href="{{ url_for('funding') }}"><i class="icon-money"></i> Funding</a>
+            </li>
+            <li class="">
+                <a href="#"><i class="icon-lock"></i> Security</a>
+            </li>
+            <li class="">
+                <a href="#"><i class="icon-wrench"></i> Settings</a>
+            </li>
+            <li class="">
+                <a href="#"><i class="icon-time"></i> History</a>
+            </li>
+            <li class="">
+                <a href="#"><i class="icon-check"></i> Get Verified</a>
+            </li>
+            <li class="small">
+                <a href="#">MtGox Claim</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="account-wrap">
+        <div id="trade-nav" class="clearfix subtab-wrap">
+            <ul class="nav nav-pills nav-account dark spaced20 pull-left">
+                <li class="active">
+                    <a href="#overview" data-toggle="tab" data-trigger-active="1">Overview</a>
+                </li>
+                <li class="">
+                    <a href="#new-order" data-toggle="tab" data-trigger-active="1">New Order</a>
+                </li>
+                <li class="">
+                    <a href="#orders" data-toggle="tab" data-trigger-active="1">Orders</a>
+                </li>
+                <li class="">
+                    <a href="#positions" data-toggle="tab" data-trigger-active="1">Positions</a>
+                </li>
+                <li class="">
+                    <a href="#trades" data-toggle="tab" data-trigger-active="1">Trades</a>
+                </li>
+            </ul>
+            <div class="pull-right">
+                <div class="feebar hidden2" style="display: block;">
+                    <div class="fee-wrap">
+                        <span class="mono fee" style="display: none;">&nbsp;</span>
+                        <span class="mono fee maker" title="Maker">0.16</span>
+                        <span class="mono fee taker" title="Taker">0.26%</span>
+                        <p class="center control-hint">Current Fee</p>
+                    </div>
+                    <div>
+                        <div class="progress progress-striped progress-info">
+                            <div class="bar" style="width: 0%;"></div>
+                            <p class="mono progress-text">$0.0000 / $50,000 (0.00%)</p>
+                        </div>
+                        <p class="control-hint">&nbsp;</p>
+                    </div>
+                    <div class="fee-wrap">
+                        <span class="mono nextfee" style="display: none;">&nbsp;</span>
+                        <span class="mono nextfee maker" title="Maker">0.14</span>
+                        <span class="mono nextfee taker" title="Taker">0.24%</span>
+                        <p class="nextfee-hint control-hint">Next Fee</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="trade-content-wrap">
+            <div class="tab-content hidden2" style="display: block;">
+                <div class="tab-pane active" id="overview">
+                    <div id="overview-wrap">
+                        <div class="vpad10 alert alert-block alert-error hidden2" style="display: none;"></div>
+                        <div class="row vmarg40bot">
+                            <div class="span6">
+                                <div class="hpad20right">
+                                    <h4 class="title">Balances</h4>
+                                    <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper form-inline"
+                                         role="grid">
+                                        <table class="table table-hover table-striped dataTable table-balance"
+                                               id="DataTables_Table_2">
+                                            <thead>
+                                            <tr role="row">
+                                                <th class="lalign nw sorting_desc" role="columnheader"
+                                                    tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
+                                                    colspan="1" aria-sort="descending"
+                                                    aria-label="Currency: activate to sort column ascending">
+                                                    Currency
+                                                </th>
+                                                <th class="ralign sorting" role="columnheader" tabindex="0"
+                                                    aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                    aria-label="Balance: activate to sort column ascending">
+                                                    Balance
+                                                </th>
+                                                <th class="ralign sorting" role="columnheader" tabindex="0"
+                                                    aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                    aria-label="Rate: activate to sort column ascending">Rate
+                                                </th>
+                                            </tr>
+                                            </thead>
+
+                                            <tfoot>
+                                            <tr>
+                                                <th name="total-label" class="nw" rowspan="1" colspan="1">Total
+                                                    (EUR):
+                                                </th>
+                                                <th class="ralign" name="total" rowspan="1" colspan="1">
+                                                    <div class="textAlignDecimal"><span>€{{ total }}</span></div>
+                                                </th>
+                                                <th class="ralign" rowspan="1" colspan="1"></th>
+                                            </tr>
+                                            </tfoot>
+                                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                            {% for currency in currencies %}
+                                            <tr class="odd">
+                                                <td class="nw">{{ currency[1] }} ({{ currency[0] }})</td>
+                                                <td class="ralign">
+                                                    <div class="textAlignDecimal"><span>{{ wallet[loop.index] }}</span></div>
+                                                </td>
+                                                <td class="ralign">€{{ currency[2] }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span6 pull-right vmarg40bot">
+                                <div class="hpad20left">
+                                    <div class="clearfix">
+                                        <h4 class="pull-left title">Rates </h4>
+                                        <p class="pull-right table-title-hint">Exchange rates used for trade
+                                            balance calculations. </p>
+                                    </div>
+                                    <div id="DataTables_Table_3_wrapper" class="dataTables_wrapper form-inline"
+                                         role="grid">
+                                        <table class="table table-hover table-striped dataTable table-rate"
+                                               id="DataTables_Table_3">
+                                            <thead>
+                                            <tr role="row">
+                                                <th class="lalign nw sorting_desc" role="columnheader"
+                                                    tabindex="0" aria-controls="DataTables_Table_3" rowspan="1"
+                                                    colspan="1" aria-sort="descending"
+                                                    aria-label="Currency Pair: activate to sort column ascending">
+                                                    Currency Pair
+                                                </th>
+                                                <th class="ralign sorting" role="columnheader" tabindex="0"
+                                                    aria-controls="DataTables_Table_3" rowspan="1" colspan="1"
+                                                    aria-label="Rate: activate to sort column ascending">Rate
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th class="nw" rowspan="1" colspan="1"></th>
+                                                <th class="ralign" rowspan="1" colspan="1"></th>
+                                            </tr>
+                                            </tfoot>
+                                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                            {% for currency in currencies %}
+                                            <tr>
+                                                <td class="nw">{{ currency[0] }}/EUR</td>
+                                                <td class="ralign">
+                                                    <div class="textAlignDecimal"><span>€{{ currency[2] }}</span></div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span6 pull-right creditbalance-wrap " style="display: none;">
+                                <div class="hpad20left">
+                                    <div class="clearfix">
+                                        <h4 class="pull-left title">Credit Lines</h4>
+                                    </div>
+                                    <table class="table table-hover table-striped dataTable creditbalance">
+                                        <thead>
+                                        <tr>
+                                            <th class="lalign">Currency</th>
+                                            <th class="ralign">Used</th>
+                                            <th class="ralign">Available</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row vmarg40bot tradebalance-wrap stats-dots-wrap vpad5top">
+                            <div class="span6">
+                                <div class="hpad20right">
+                                    <h4 class="title">Trade Balances</h4>
+                                    <table class="stats-dots">
+                                        <tbody>
+                                        <tr>
+                                            <td class="k">Trade Balance</td>
+                                            <td class="dots"></td>
+                                            <td name="tradebalance" class="mono">€{{ total }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="control-hint ralign">Total margin currency
+                                                balance.
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="stats-dots">
+                                        <tbody>
+                                        <tr>
+                                            <td class="k">Equity</td>
+                                            <td class="dots"></td>
+                                            <td name="equity" class="mono">€{{ total }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="control-hint ralign">Trade balance combined
+                                                with unrealized profit/loss.
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="stats-dots">
+                                        <tbody>
+                                        <tr>
+                                            <td class="k">Used Margin</td>
+                                            <td class="dots"></td>
+                                            <td name="margin" class="mono">€0.0000</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="control-hint ralign">Total margin amount used
+                                                in open positions.
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="stats-dots">
+                                        <tbody>
+                                        <tr>
+                                            <td class="k">Free Margin</td>
+                                            <td class="dots"></td>
+                                            <td name="freemargin" class="mono">€{{ total }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="control-hint ralign">Usable margin balance.
+                                                Equal to equity minus used margin.
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="stats-dots">
+                                        <tbody>
+                                        <tr>
+                                            <td class="k">Margin Level</td>
+                                            <td class="dots"></td>
+                                            <td name="marginlevel" class="mono">——</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="control-hint ralign">Percentage ratio of
+                                                equity to used margin.
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="span6 pull-right">
+                                <div class="hpad20left">
+                                    <h4 class="title">Position Valuation</h4>
+                                    <table class="stats-dots">
+                                        <tbody>
+                                        <tr>
+                                            <td class="k">Opening Cost</td>
+                                            <td class="dots"></td>
+                                            <td name="unrealized-cost" class="mono">€0.0000</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="control-hint ralign">Original cost of all
+                                                open positions.
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="stats-dots">
+                                        <tbody>
+                                        <tr>
+                                            <td class="k">Current Valuation</td>
+                                            <td class="dots"></td>
+                                            <td name="unrealized-value" class="mono">€0.0000</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="control-hint ralign">Paper valuation of all
+                                                open positions.
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="stats-dots">
+                                        <tbody>
+                                        <tr>
+                                            <td class="k">Profit/Loss</td>
+                                            <td class="dots"></td>
+                                            <td class="mono"><span name="unrealized">€0.0000</span>
+                                                <small name="unrealized-pct">(0.00%)</small>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="control-hint ralign">Paper profit/loss of all
+                                                open positions.
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix slider ledger-wrap">
+                            <div class="transfer" style="width: 1976px;">
+                                <div class="frame" style="width: 988px;">
+                                    <h4 class="title">Ledger</h4>
+                                    <div id="DataTables_Table_5_wrapper" class="dataTables_wrapper form-inline"
+                                         role="grid">
+                                        <div class="dataTables_table_wrapper" style="min-height: 312px;">
+                                            <table class="table table-hover table-striped dataTable table-ledger"
+                                                   id="DataTables_Table_5"
+                                                   aria-describedby="DataTables_Table_5_info">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="lalign nw sorting" role="columnheader"
+                                                        tabindex="0" aria-controls="DataTables_Table_5"
+                                                        rowspan="1" colspan="1" style="width: 85px;"
+                                                        aria-label="Ledger ID: activate to sort column ascending">
+                                                        Ledger ID
+                                                    </th>
+                                                    <th class="lalign sorting_desc" role="columnheader"
+                                                        tabindex="0" aria-controls="DataTables_Table_5"
+                                                        rowspan="1" colspan="1" aria-sort="descending"
+                                                        aria-label="Date: activate to sort column ascending">
+                                                        Wallet in
+                                                    </th>
+                                                    <th class="lalign sorting" role="columnheader" tabindex="0"
+                                                        aria-controls="DataTables_Table_5" rowspan="1"
+                                                        colspan="1"
+                                                        aria-label="Type: activate to sort column ascending">
+                                                        Wallet out
+                                                    </th>
+                                                    <th class="lalign sorting" role="columnheader" tabindex="0"
+                                                        aria-controls="DataTables_Table_5" rowspan="1"
+                                                        colspan="1"
+                                                        aria-label="Currency: activate to sort column ascending">
+                                                        Type
+                                                    </th>
+                                                    <th class="ralign sorting" role="columnheader" tabindex="0"
+                                                        aria-controls="DataTables_Table_5" rowspan="1"
+                                                        colspan="1"
+                                                        aria-label="Amount: activate to sort column ascending">
+                                                        Currency
+                                                    </th>
+                                                    <th class="ralign sorting" role="columnheader" tabindex="0"
+                                                        aria-controls="DataTables_Table_5" rowspan="1"
+                                                        colspan="1"
+                                                        aria-label="Balance: activate to sort column ascending">
+                                                        Amount
+                                                    </th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                {% for ledger in ledgers %}
+                                                <tr class="odd">
+                                                    <td class="nw">{{ ledger[0] }}</td>
+                                                    <td class="">{{ ledger[1] }}</td>
+                                                    <td class="">{{ ledger[2] }}</td>
+                                                    <td class="">{{ ledger[3] }}</td>
+                                                    <td class="">
+                                                        <div class="text-center">{{ ledger[4] }}</div>
+                                                    </td>
+                                                    <td class="ralign">
+                                                        <div class="textAlignDecimal"><span>{{ ledger[5] }}</span></div>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <div class="pull-left">
+                                                <div class="dataTables_info" id="DataTables_Table_5_info">1 - 10
+                                                    of 100 ledger entries
+                                                </div>
+                                                <div class="max-rows-notice control-hint">Max displayed records
+                                                    reached, see history for all
+                                                    records
+                                                </div>
+                                            </div>
+                                            <div class="pull-right">
+                                                <div class="dataTables_paginate paging_bootstrap pagination">
+                                                    <ul>
+                                                        <li class="disabled"><a
+                                                                href="#">‹</a></li>
+                                                        <li class="active"><a href="#">1</a>
+                                                        </li>
+                                                        <li><a href="#">2</a></li>
+                                                        <li><a href="#">3</a></li>
+                                                        <li><a href="#">4</a></li>
+                                                        <li><a href="#">5</a></li>
+                                                        <li class="dummy"><a href="#">…</a>
+                                                        </li>
+                                                        <li><a href="#">10</a></li>
+                                                        <li><a href="#">›</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="frame" style="width: 988px; visibility: hidden;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

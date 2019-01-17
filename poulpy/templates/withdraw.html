@@ -1,0 +1,334 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container page-wrap">
+    <div class="clearfix">
+        <div id="account-tab-data" class="pull-right multiline">
+            <div class="ib">
+                <div>
+                    <span class="muted2 key">Current time:</span>
+                    <span id="local-clock" class="val"></span>
+                </div>
+                <div>
+                    <span class="muted2 key">Last Updated:</span>
+                    <span class="order-data-lastupdate val manrefresh-last"></span>
+                </div>
+            </div>
+            <div class="ib hpad20left top">
+                <button class="manrefresh-btn btn" autocomplete="off" title="Refresh Data"><i
+                        class="icon icon-refresh icon-white"></i><img class="hidden2 spinner"
+                                                                      src="/static/images/spinner-white.gif"
+                                                                      alt=""/>
+                </button>
+            </div>
+        </div>
+        <ul class="nav nav-tabs spaced5 " id="account-nav">
+            <li class="">
+                <a href="{{ url_for('trade') }}"><i class="icon-retweet"></i> Trade</a>
+            </li>
+            <li class="active">
+                <a href="{{ url_for('funding') }}"><i class="icon-money"></i> Funding</a>
+            </li>
+            <li class="">
+                <a href="#"><i class="icon-lock"></i> Security</a>
+            </li>
+            <li class="">
+                <a href="#"><i class="icon-wrench"></i> Settings</a>
+            </li>
+            <li class="">
+                <a href="#"><i class="icon-time"></i> History</a>
+            </li>
+            <li class="">
+                <a href="#"><i class="icon-check"></i> Get Verified</a>
+            </li>
+            <li class="small">
+                <a href="#">MtGox Claim</a>
+            </li>
+        </ul>
+    </div>
+    <div class="account-wrap">
+        <div class="clearfix subtab-wrap">
+            <ul class="nav nav-pills nav-account dark spaced20 pull-left" id="settings-nav">
+                <li class="">
+                    <a href="{{ url_for('funding') }}"><i class="icon icon-download-alt"></i> Deposit</a>
+                </li>
+                <li class="active">
+                    <a href="{{ url_for('withdraw') }}"><i class="icon icon-share"></i> Withdraw</a>
+                </li>
+                <li class="">
+                    <a href=""><i class="icon icon-check"></i> Audit</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="vmarg20top">
+            <div class="row">
+                <div id="asset-nav" class="react-root">
+                    <div class="asset-nav fl mr1" id="withdraw-nav"><h5 class="mb3"><span>Fiat Currencies</span></h5>
+                        <ul class="asset-list ma0 list ba bw-1 br2">
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-eur-s pr2"></i><span class="text">Euro</span><span
+                                    id="eur"> (EUR)</span></a></li>
+                        </ul>
+                        <h5 class="mb3 mt3"><span>Crypto Currencies</span></h5>
+                        <ul class="asset-list ma0 list ba bw-1 br2">
+                            <li class="active bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-xbt-s pr2"></i><span class="text">Bitcoin</span><span
+                                    id="xbt"> (XBT)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-usdt-s pr2"></i><span class="text">Tether USD</span><span
+                                    id="usdt"> (USDT)</span></a></li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-xrp-s pr2"></i><span class="text">Ripple</span><span id="xrp"> (XRP)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-xlm-s pr2"></i><span class="text">Lumen</span><span id="xlm"> (XLM)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-ltc-s pr2"></i><span class="text">Litecoin</span><span
+                                    id="ltc"> (LTC)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-xdg-s pr2"></i><span class="text">Dogecoin</span><span
+                                    id="xdg"> (XDG)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-dash-s pr2"></i><span class="text">Dash</span><span id="dash"> (DASH)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-eth-s pr2"></i><span class="text">Ether</span><span id="eth"> (ETH)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-etc-s pr2"></i><span class="text">Ether Classic</span><span
+                                    id="etc"> (ETC)</span></a></li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-rep-s pr2"></i><span class="text">Augur</span><span id="rep"> (REP)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-zec-s pr2"></i><span class="text">Zcash</span><span id="zec"> (ZEC)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-mln-s pr2"></i><span class="text">Melon</span><span id="mln"> (MLN)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-xmr-s pr2"></i><span class="text">Monero</span><span id="xmr"> (XMR)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-gno-s pr2"></i><span class="text">Gnosis</span><span id="gno"> (GNO)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-eos-s pr2"></i><span class="text">EOS</span><span
+                                    id="eos"> (EOS)</span></a></li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-bch-s pr2"></i><span class="text">Bitcoin Cash</span><span
+                                    id="bch"> (BCH)</span></a></li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-bsv-s pr2"></i><span class="text">Bitcoin SV</span><span
+                                    id="bsv"> (BSV)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-qtum-s pr2"></i><span class="text">QTUM</span><span id="qtum"> (QTUM)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-ada-s pr2"></i><span class="text">Cardano</span><span
+                                    id="ada"> (ADA)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-xtz-s pr2"></i><span class="text">Tezos</span><span id="xtz"> (XTZ)</span></a>
+                            </li>
+                            <li class=" bt1"><a href="" class="asset db pa2 f6"><i
+                                    class="f5 crypton sym-fee-s pr2"></i><span
+                                    class="text">Kraken Fee Credit</span><span
+                                    id="fee"> (FEE)</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="deposit-content" class="span10" data-locked="0">
+                    <div class="pull-right span4 hmarg20left vmarg30top vmarg20bot">
+                        <div class="alert alert-info alert-even funding-info">
+                            <table class="stats-dots">
+                                <tbody>
+                                <tr>
+                                    <td class="k">Daily limit</td>
+                                    <td class="dots"></td>
+                                    <td>$0.00 / ——</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="control-hint ralign"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="stats-dots vmarg0bot">
+                                <tbody>
+                                <tr>
+                                    <td class="k">Monthly limit</td>
+                                    <td class="dots"></td>
+                                    <td>$0.00 / ——</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="control-hint ralign"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="stats-dots">
+                                <tbody>
+                                <tr>
+                                    <td class="k">Current balance</td>
+                                    <td class="dots"></td>
+                                    <td>₿0.00000</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="stats-dots">
+                                <tbody>
+                                <tr>
+                                    <td class="k">Withheld</td>
+                                    <td class="dots"></td>
+                                    <td>₿0.00000</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="stats-dots">
+                                <tbody>
+                                <tr>
+                                    <td class="k">Withheld (converted)</td>
+                                    <td class="dots"></td>
+                                    <td>$0.00</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="stats-dots vmarg0bot">
+                                <tbody>
+                                <tr>
+                                    <td class="k"><strong>Maximum withdraw</strong></td>
+                                    <td class="dots"></td>
+                                    <td><strong>No limit</strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="control-hint ralign"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="qr-placeholder center vmarg40top"></div>
+                    </div>
+                    <div class="method-wrap" data-asset="XXBT" data-method="Bitcoin">
+                        <div class="title-wrap">
+                            <h5 class="title">Bitcoin withdraw</h5>
+                            <p>Ask for Bitcoins withdraw by sending a message to the wallet shown below. </p>
+                            <ul>
+                                <li>Because wallet expire, if you try more than 5 wallets, then the oldest ones
+                                    will be set to expire in 7 days until you have 5 wallets again.
+                                </li>
+                                <li>Use the available buttons to add the wallet.
+                                </li>
+                                <li>Funds will be available only if the wallet owner accept the trade.</li>
+                            </ul>
+                        </div>
+
+                        <h5 class="title">Request History</h5><br>
+                        <div class="alert"><br>
+                        {% for result in messages %}
+                            You have a request for <b>{{ result[0] }}</b> BTC from <b>{{ result[1] }}</b>.<br>
+                            Message : {{ result[2]|safe }}
+                            <br><br>
+                        {% endfor %}
+                        </div><br>
+
+                        <h5 class="title">Request Bitcoins</h5>
+                        <div class="address-wrap">
+                            <div class="form-horizontal form-control-left vpad10" style="display: block;">
+                                <div class="control-group">
+                                    <label class="control-label">My wallet</label>
+                                    <div class="controls">
+                                        <span class="readonly">{{ wallet }}</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Minimum</label>
+                                    <div class="controls">
+                                        <span class="readonly">₿0.00010</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hide" style="display: block;">
+
+                                <div id="table-address-wrapper">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline"
+                                         role="grid">
+                                        <div class="pull-right">
+                                            <div class="dataTables_info" id="DataTables_Table_0_info"></div>
+                                        </div>
+                                        <form method="post" action="{{ url_for('sendMessage') }}" autocomplete="off">
+                                            <div class="dataTables_table_wrapper">
+                                                <table class="table table-hover table-striped dataTable table-address"
+                                                       id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <th class="lalign" role="columnheader" rowspan="1"
+                                                            colspan="1" style="width: 140px;">Message
+                                                        </th>
+                                                        <th class="lalign sorting_disabled break-word" role="columnheader"
+                                                            rowspan="1" colspan="1">Withdrawal wallet
+                                                        </th>
+                                                        <th class="lalign sorting_disabled" role="columnheader" rowspan="1" colspan="1" style="width: 140px;">Amount
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                    <tr class="odd">
+                                                        <td class="break-word">
+                                                            <div class="vpad10">
+                                                                <textarea class="form-control" rows="3" name="message" id="message"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td class="break-word">
+                                                            <div id="addy-395ZNsUb1caetoM9wmCz2KFZKpUBWeBuYu"
+                                                                 class="vpad10">
+                                                                <input type="text" class="form-control" id="address" name="receiver" placeholder="Deposit Adress">
+                                                            </div>
+                                                        </td>
+                                                        <td class="ralign" id="depositAmount">
+                                                            <input type="number" placeholder="0.00000" name="amount" step="0.00001" min="0.00010" max="1.0000">
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="vmarg40top">
+                                                <div class="alert alert-block alert-notify" id="deposit-acknowledge-wrapper"
+                                                     style="display: inline-block;">
+                                                    <span class="msg-success">By sending request to this wallet, I acknowledge that Poulpy is not responsible for any coins request to the wrong address.</span>
+                                                    <button type="submit" class="btn btn-notify" id="deposit-acknowledge">Yes, I acknowledge & Send Request</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="pull-right">
+                                            <div class="dataTables_paginate paging_bootstrap pagination">
+                                                <ul>
+                                                    <li class="disabled"><a href="javascript: void(0);">‹</a></li>
+                                                    <li class="disabled"><a href="javascript: void(0);">›</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+<script src="../static/js/funding.js"></script>
+{% endblock %}
