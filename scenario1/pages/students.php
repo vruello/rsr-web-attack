@@ -21,7 +21,7 @@ if ($code && (preg_match("/update/i", $code)
 
 if ($code) { 
 
-    $req = $app->db()->con()->prepare('SELECT * FROM classes WHERE code = :code');
+    $req = $app->db()->con('readonly')->prepare('SELECT * FROM classes WHERE code = :code');
     $req->execute(array(':code' => $code));
     
     $data = $req->fetchAll();
@@ -40,7 +40,7 @@ if ($code) {
                 JOIN classes c ON g.id_classes = c.id_classes 
                 WHERE c.code = "'. $code .'" ';
     
-    $students = $app->db()->con()->query($students);
+    $students = $app->db()->con('readonly')->query($students);
 
     ?>
 
@@ -55,7 +55,6 @@ if ($code) {
         <table class="table">
             <thead>
                 <tr>
-                <th>#</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Grade</th>
@@ -66,10 +65,14 @@ if ($code) {
                 foreach ($students as $student):
                 ?>
                     <tr>
-                        <th class="counterCell"></th>
                         <td><?php echo $student["firstname"]; ?></td>
                         <td><?php echo $student["lastname"]; ?></td>
-                        <td><?php echo $student["grade"]; ?></td>
+                        <td>
+                        <?php echo $student["grade"]; ?>
+<?php if($student['grade'] == 6): ?>
+                <span class="text-success font-weight-bold">Le flag 2 est : <?= $app->flag(2) ?></span>
+<?php endif; ?>
+                        </td>
                     </tr>
 
                 <?php endforeach; ?>
@@ -78,7 +81,7 @@ if ($code) {
     <?php
 }
 else {
-    $req = $app->db()->con()->prepare('SELECT * FROM classes WHERE id_users = :id_users');
+    $req = $app->db()->con('readonly')->prepare('SELECT * FROM classes WHERE id_users = :id_users');
     $req->execute(array(':id_users' => $user['id_users']));
 
     $classes = $req->fetchAll();

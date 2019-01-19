@@ -5,7 +5,7 @@
 - user: admin | password: zE?qGJSatgs=_73f | role: ADMIN
 - user: chicken | password: CW3PMTYsAB!psp7q | role: TEACHER
 - user: veal | password: 09112016 | role: TEACHER
-- user: salmon | password: +B3p3n_u$XQWqzxw | role: SECRETARY
+- user: salmon | password: cGWhbAUmTe4JGf4J | role: SECRETARY
 - user: lobster | password: passw0rd | role: COMMUNICATION
 
 ## Lancer 
@@ -34,3 +34,25 @@ Objectif : Vous êtes Car Rot. Vous souhaitez modifier votre note la plus basse 
 - La secrétaire vient souvent sur l'écran d'accueil...
 - La secrétaire upload des fichiers .csv et peut les récupérer après.
 
+## Gestion des flags
+
+>>> Créer deux utilisateurs : superadmin, admin, readonly.
+
+Tables notes => lisible par readonly, modifiable par admin
+Table flags => lisible par admin, modifiable par superadmin
+
+>>> De base on accède au site en tant que readonly, mais on a aussi les logs et une co\
+nnexion ouverte avec admin
+
+Premier flag = S'affiche si connecté en tant que veal
+Deuxième flag : Une des notes "masquée" est en faite un flag
+Troisième flag : Flag une fois connecté en tant que lobster
+Quatrième flag : Connecté en tant que salmon
+Cinquième flag : Upload d'un fichier avec extension .phphidden (=> exploit XXE pour le\
+cture)
+Sixième flag : modification de la note => connexion en tant que admin (donc note modif\
+iable). Ya un process exécuté en tant que root avec des droits en lecture et écriture \
+que pour root qui se connecte en tant que superadmin, qui vérifie si la note a changé,\
+ et si la note a changé ajoute le flag dans la bdd.
+
+       

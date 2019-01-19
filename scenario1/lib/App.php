@@ -67,5 +67,8 @@ class App {
 		return $this->router;
 	}
 
+    public function flag($id) { 
+        return $this->config['flags'][$id];
+    }
 	
 }

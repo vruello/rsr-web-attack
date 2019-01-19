@@ -13,7 +13,8 @@ class AuthenticationManager {
 	}
 
 	public function login($username, $password) {
-		$req = $this->db->con()->prepare('SELECT * FROM users WHERE username = :username AND password = :password');
+		echo 'test ' . $username . ' and ' . $password;
+		$req = $this->db->con('readonly')->prepare('SELECT * FROM users WHERE username = :username AND password = :password');
 		$req->execute(array(
 			':username' => $username,
 			':password' => hash('sha256', $password)
@@ -50,7 +51,7 @@ class AuthenticationManager {
 
 		if (isset($_SESSION['logged']) && $_SESSION['logged'] === true && isset($_SESSION['user_id'])) {
 
-			$req = $this->db->con()->prepare('SELECT * FROM users WHERE id_users = :id');
+			$req = $this->db->con('readonly')->prepare('SELECT * FROM users WHERE id_users = :id');
 			$req->execute(array(':id' => (int) $_SESSION['user_id']));
 
 			$data = $req->fetchAll();

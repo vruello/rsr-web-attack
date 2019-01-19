@@ -51,3 +51,31 @@ CREATE TABLE grades
 			FOREIGN KEY 	(id_classes) 	REFERENCES classes(id_classes),
 			FOREIGN KEY 	(id_students) 	REFERENCES students(id_students)
 		);
+
+CREATE TABLE flags
+		(
+			id INT NOT NULL AUTO_INCREMENT,
+			flag VARCHAR(255) NOT NULL,
+			PRIMARY KEY (id)
+		);
+		
+
+CREATE USER 'readonly'@'localhost' IDENTIFIED BY 'readonlypassword';
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'adminpassword';
+CREATE USER 'superadmin'@'localhost' IDENTIFIED BY 'superadminpassword';
+
+GRANT SELECT ON Scenario1.classes TO 'readonly'@'localhost';
+GRANT SELECT ON Scenario1.grades TO 'readonly'@'localhost';
+GRANT SELECT ON Scenario1.news TO 'readonly'@'localhost';
+GRANT SELECT ON Scenario1.students TO 'readonly'@'localhost';
+GRANT SELECT ON Scenario1.users TO 'readonly'@'localhost';
+
+GRANT SELECT,INSERT,UPDATE,DELETE ON Scenario1.classes TO 'admin'@'localhost';
+GRANT SELECT,INSERT,UPDATE,DELETE ON Scenario1.grades TO 'admin'@'localhost';
+GRANT SELECT,INSERT,UPDATE,DELETE ON Scenario1.news TO 'admin'@'localhost';
+GRANT SELECT,INSERT,UPDATE,DELETE ON Scenario1.students TO 'admin'@'localhost';
+GRANT SELECT,INSERT,UPDATE,DELETE ON Scenario1.users TO 'admin'@'localhost';
+GRANT SELECT ON Scenario1.flags TO 'admin'@'localhost';
+
+GRANT ALL ON Scenario1.* TO 'superadmin'@'localhost';
+

@@ -5,6 +5,7 @@ session_start();
 require(__DIR__ . '/../config/database.php');
 require(__DIR__ . '/../config/roles.php'); // roles must be before rooter
 require(__DIR__ . '/../config/router.php');
+require(__DIR__ . '/../config/flags.php');
 
 // Auto load classes
 spl_autoload_register(function ($class_name) {

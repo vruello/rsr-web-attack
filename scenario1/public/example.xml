@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<grades>
+  <grade>
+    <name>Orange Juice</name>
+    <grade>19</grade>
+    <class>CS-130</class>
+  </grade>
+  <grade>
+    <name>Straw Berry</name>
+    <grade>6</grade>
+    <class>CS-130</class>
+  </grade>
+</grades>
+

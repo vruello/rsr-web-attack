@@ -1,0 +1,11 @@
+[Unit]
+Description=Phantomjs loop Starter service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/phantomjs --platform offscreen /var/www/html/scenario1/extern/phantomjs.js
+User=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
