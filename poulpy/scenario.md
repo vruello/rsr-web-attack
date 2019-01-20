@@ -1,10 +1,11 @@
-## Scenario
+## Poulpy Scenario
 You are missing money to buy Christmas presents.
+Unfortunatelly, you forgot your password.
 Divert Bitcoins on your own account.
 Here are your ids :
 
     Login : Pirateirb
-    Password : Zeaz9M97
+    Wallet number : 3MqfLxPrTUAHkAt1HZArfcCe8DCLhbRtTZ
 
 ### Step 1
 Find an account to steal money.

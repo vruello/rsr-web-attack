@@ -1,4 +1,4 @@
-## Solution
+## Poulpy Solution
 
 ### Step 1
 SQL injection in login field :
@@ -39,11 +39,9 @@ Connect to Bob with the stolen cookie. Bob has 0.33 (3374.70€) BTX.
 
 
 ### Step 4
-Connect to Pirateirb:Zeaz9M97 to know your wallet number (don't forget the double authentification number).
-
 Connect to Bob with the stolen cookie.
 
-Make a deposit from Bob account to your own wallet with the maximum of XBT.
+Make a deposit from Bob account to your own wallet.
 
     Flag : 48294e0ba97e1ff2b23ba6357c1b9880a3f600459ef89cd58013571b47e58797
 

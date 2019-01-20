@@ -16,7 +16,6 @@ import hashlib
 import pymysql
 
 app = Flask(__name__)
-
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'poulpy'
@@ -25,6 +24,7 @@ app.config['MYSQL_DATABASE_PORT'] = 3306
 pp = pprint.PrettyPrinter(indent=4)
 
 authentification_number = random_number()
+challenge = None
 
 
 def getCursor():
@@ -72,10 +72,13 @@ def login():
         else:
             hash = find_password(response, login)
             if hash == m.hexdigest():
+                global authentification_number
                 if factor == "1234":  # str(authentification_number):
                     session['logged_in'] = True
                     session['user'] = login
-                    return redirect(url_for('trade'))
+                    retour = current_app.make_response(redirect('/trade'))
+                    retour.delete_cookie('pass')
+                    return retour
                 else:
                     return redirect(url_for('index'))
             else:
@@ -121,7 +124,8 @@ def funding():
         cursor = getCursor()
         cursor.execute("SELECT wallet FROM users_wallet WHERE login = '" + session['user'] + "'")
         param = cursor.fetchone()
-        return render_template('funding.html', wallet=param[0], maxUserBTC=getBTCByWallet(getWalletByUser(session['user'])))
+
+        return render_template('funding.html', wallet=param[0], maxUserBTC=getBTCByWallet(getWalletByUser(session['user'])), challenge=challenge)
 
 
 @app.route("/withdraw", methods=['GET', 'POST'])
@@ -170,15 +174,12 @@ def getWalletByUser(user):
     return fetchOne(cursor)
 
 
-
 def getUserByWallet(wallet):
     cursor = getCursor()
     sql = "SELECT login FROM users_wallet WHERE wallet = %s"
     cursor.execute(sql, (wallet,))
 
     return fetchOne(cursor)
-
-
 
 
 def getMessagesByUser(user):
@@ -195,24 +196,33 @@ def transfert():
 
     sender = getWalletByUser(session['user'])
     receiver = unicodeToString(data['receiver'])
-    amount = float(unicodeToString(data['amount']))
 
-    currentSenderAmount = float(getBTCByWallet(sender))
-    currentReceiverAmount = float(getBTCByWallet(receiver))
+    try:
+        amount = float(unicodeToString(data['amount']))
+    except ValueError:
+        amount = 0.0
+
+    # Pas / Mauvais wallet renseigné : possible de rajouter un flash plutot que juste redirect
+    try:
+        currentSenderAmount = float(getBTCByWallet(sender))
+        currentReceiverAmount = float(getBTCByWallet(receiver))
+    except ValueError:
+        return redirect(url_for('funding'))
 
     cursor = getCursor()
     cursor.execute("UPDATE wallet SET XBT = " + repr(currentSenderAmount - amount) + " WHERE number = '" + sender + "'")
     cursor.execute("UPDATE wallet SET XBT = " + repr(currentReceiverAmount + amount) + " WHERE number = '" + receiver + "'")
-
-    if receiver == '8954c0fad06520bbdaa53439b15898c4' and sender == '0b14ec1baba4b4c1b06fb06e9c0d77d7':
-        session['transactionCheloue'] = True
 
     if data.has_key('message'):
         cursor.execute("INSERT INTO message values ('" + getUserByWallet(sender) + "', '" + getUserByWallet(receiver) + "', '" + unicodeToString(data['message']) + "')")
 
     cursor.connection.commit()
 
+    global challenge
+    challenge = check_challenge(receiver, sender)
+
     return redirect(url_for('funding'))
+
 
 @app.route("/sendMessage", methods=['GET', 'POST'])
 def sendMessage():
@@ -221,7 +231,6 @@ def sendMessage():
     receiver = unicodeToString(data['receiver'])
     amount = float(unicodeToString(data['amount']))
     message = data['message']
-
 
     re = "INSERT INTO message values ('" + getUserByWallet(sender) + "', '" + getUserByWallet(receiver) + "', '" + repr(amount) + "', '" + message + "')"
     print(re)
@@ -232,6 +241,10 @@ def sendMessage():
 
     return redirect(url_for('withdraw'))
 
+@app.route("/getFactor", methods=['POST'])
+def getFactor():
+    global authentification_number
+    return authentification_number
 
 if __name__ == "__main__":
     app.secret_key = 'poulpySecret2019'

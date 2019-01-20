@@ -42,6 +42,12 @@ Create Database
 	mysql -u root
 	source database.sql
 
+Database User
+
+	User : Poulpy
+	Password : poulpy2019
+	
+		
 ### Virtual Environment
 
 > If an other python version is installed and the previous commands are not working, use these commands to overcome compatibility issues bewteen Python 2.7 and Flask

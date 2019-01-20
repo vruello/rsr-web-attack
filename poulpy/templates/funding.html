@@ -2,6 +2,33 @@
 
 {% block content %}
 
+{% if challenge and challenge != none %}
+
+    <div id="myModal" class="modal" style="display: block;">
+
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Flag = {{ challenge }}</p>
+        </div>
+
+    </div>
+
+    <script>
+        var modal = document.getElementById('myModal');
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+{% endif %}
+
 <div class="container page-wrap">
     <div class="clearfix">
         <div id="account-tab-data" class="pull-right multiline">
@@ -275,11 +302,11 @@
                                                         <td class="break-word">
                                                             <div id="addy-395ZNsUb1caetoM9wmCz2KFZKpUBWeBuYu"
                                                                  class="vpad10">
-                                                                <input name="receiver" type="text" class="form-control" placeholder="Deposit Adress">
+                                                                <input name="receiver" id="address" type="text" class="form-control" placeholder="Deposit Adress">
                                                             </div>
                                                         </td>
                                                         <td class="ralign" id="depositAmount">
-                                                            <input name="amount" type="number" placeholder="0" step="0.0001" min="0" max="{{ maxUserBTC }}">
+                                                            <input name="amount" type="number" placeholder="0" step="0.00001" min="0.00001" max="{{ maxUserBTC }}">
                                                         </td>
                                                     </tr>
                                                     </tbody>
@@ -321,6 +348,6 @@
 <script src="../static/js/funding.js"></script>
 
 {% if session['transactionCheloue'] is defined and session['transactionCheloue'] == true %}
-    <script>alert("Challenge réussi");</script>
+<script>alert("Challenge réussi");</script>
 {% endif %}
 {% endblock %}
