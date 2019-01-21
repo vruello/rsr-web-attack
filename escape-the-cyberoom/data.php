@@ -165,4 +165,12 @@ function get_secret($db, $login) {
     return $res['secret'];
 }
 
+function get_flag($db, $stage) {
+    $stmt = $db->prepare("SELECT flag FROM stages WHERE id = :stage");
+    $stmt->bindValue(':stage', $stage);
+    $stmt->execute();
+    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $res['flag'];
+}
+
 ?>

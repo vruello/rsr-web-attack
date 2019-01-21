@@ -26,11 +26,12 @@
             $clue = get_clue($db_admin, $stage);
 
             if ($input == $clue) {
+                $flag = get_flag($db_admin, $stage);
                 validate_stage($db_admin, $db_guest, $_SESSION['login'], $stage);
                 // Update stage
                 $stage = get_stage($db_admin, $_SESSION['login']);
                 $description = get_description($db_admin, $stage);
-                $validation_msg = "Congratulations!";
+                $validation_msg = "Congratulations! Flag: " . $flag;
                 $err_validation_msg = "";
             }
 
@@ -112,6 +113,10 @@
               } else {
                   echo "Freedom is yours.";
               }?></h1>
+
+              <?php if($freedom) {
+                  echo "<br/>Final flag: 90ba3226-435a-43b0-97ae-dafcb17cd51c";
+              }?>
         </div>
       </div>
     </header>

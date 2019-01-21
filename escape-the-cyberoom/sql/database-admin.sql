@@ -16,6 +16,7 @@ CREATE TABLE stages (
     id              int NOT NULL,
     clue            varchar(100),
     description     varchar(100),
+    flag            varchar(100),
     PRIMARY KEY(id)
 );
 
@@ -29,11 +30,11 @@ CREATE TABLE private_messages (
 );
 
 -- Stages
-INSERT INTO stages (id, clue, description) VALUES (1, "Three drunkards, Matthieu, David and Myriam drink a rhum barrel together.", "Experience is the teacher of all things.");
-INSERT INTO stages (id, clue, description) VALUES (2, "Matthieu would drink the barrel on his own in 1h.", "Inspiration is one thing. Stealing is another.");
-INSERT INTO stages (id, clue, description) VALUES (3, "David would do it in 3h.", "Clues always have a description.");
-INSERT INTO stages (id, clue, description) VALUES (4, "Myriam would absorb it in 6h.", "There is no such thing as public opinion. There is only published opinion.");
-INSERT INTO stages (id, clue, description) VALUES (5, "How much time do the three drunkards need to drink the whole barrel together?", "Everyone has secrets. It's just a matter of finding out what they are.");
+INSERT INTO stages (id, clue, description, flag) VALUES (1, "Three drunkards, Matthieu, David and Myriam drink a rhum barrel together.", "Experience is the teacher of all things.", "1754eb65-e534-44c9-a41f-130907ed096b");
+INSERT INTO stages (id, clue, description, flag) VALUES (2, "Matthieu would drink the barrel on his own in 1h.", "Inspiration is one thing. Stealing is another.", "06cca205-c9fe-4d6d-9a8e-178f9841333b");
+INSERT INTO stages (id, clue, description, flag) VALUES (3, "David would do it in 3h.", "Clues always have a description.", "fa5658c2-2f2b-4cc5-9dd6-86e6746e1e14");
+INSERT INTO stages (id, clue, description, flag) VALUES (4, "Myriam would absorb it in 6h.", "There is no such thing as public opinion. There is only published opinion.", "d3a260b3-3b56-413c-96b9-ad3f40b89f62");
+INSERT INTO stages (id, clue, description, flag) VALUES (5, "How much time do the three drunkards need to drink the whole barrel together?", "Everyone has secrets. It's just a matter of finding out what they are.", "3e7351a6-529b-4ec0-b9ba-e1512521634f");
 
 -- Users
 INSERT INTO users(id, login, password, stage, secret) VALUES (1, "admin", "$2y$10$ncFJWycVq.zXT6UpooJnjOQ6RHfPDWq.AcPMPGWxWmGTRDrYJfzWm", 6, 90448);
