@@ -393,3 +393,37 @@ blockquote {
     background-color: #64a19d;
     color: white;
 }
+
+@font-face {
+  font-family: 'Varela Round';
+  src: url('../Varela_Round/VarelaRound-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../Nunito/Nunito-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face {
+  font-family: 'NunitoBoldItalic';
+  src: url('../Nunito/Nunito-BlackItalic.ttf');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'NunitoItalic';
+  src: url('../Nunito/Nunito-Italic.ttf');
+  font-weight: normal;
+  font-style: italic;
+}
+
+
+@font-face {
+  font-family: 'NunitoBold';
+  src: url('../Nunito/Nunito-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+} */
