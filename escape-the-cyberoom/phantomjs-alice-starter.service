@@ -1,0 +1,11 @@
+[Unit]
+Description=Phantomjs loop Starter service for alice
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/phantomjs --platform offscreen /var/www/html/phantomjs-alice.js
+User=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

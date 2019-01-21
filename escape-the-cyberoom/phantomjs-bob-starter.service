@@ -1,0 +1,11 @@
+[Unit]
+Description=Phantomjs loop Starter service for bob
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/phantomjs --platform offscreen /var/www/html/phantomjs-bob.js
+User=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
