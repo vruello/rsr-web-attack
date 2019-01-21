@@ -22,9 +22,10 @@ app.config['MYSQL_DATABASE_DB'] = 'poulpy'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_PORT'] = 3306
 pp = pprint.PrettyPrinter(indent=4)
-
 authentification_number = random_number()
 challenge = None
+users = None
+usersCrypt = {}
 
 
 def getCursor():
@@ -50,6 +51,31 @@ def index():
     else:
         return redirect(url_for('trade'))
 
+@app.before_first_request
+def initUsers():
+    global users
+    users = getAllUsers()
+
+    for user in users:
+        usersCrypt[user[0]] = crypte(user[0] + user[1])
+
+
+@app.before_request
+def checkLogin():
+    if not session.get('logged_in') and request.endpoint not in ['login']:
+        redirect(url_for('login'))
+
+    if request.endpoint in ['trade', 'funding', 'withdraw', 'security', 'getBTCByWallet', 'transfert', 'sendMessage']:
+        if 'sessionID' in session:
+            checkCookie()
+
+
+def checkCookie():
+    global usersCrypt
+    cookie = request.cookies['sessionID']
+    if cookie in usersCrypt.values():
+        session['user'] = list(usersCrypt.keys())[list(usersCrypt.values()).index(cookie)]
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -71,13 +97,19 @@ def login():
             return redirect(url_for('index'))
         else:
             hash = find_password(response, login)
+
             if hash == m.hexdigest():
                 global authentification_number
-                if factor == "1234":  # str(authentification_number):
+                if factor == str(authentification_number):
+                    sessionCookie = crypte(unicodeToString(login) + hash)
+
                     session['logged_in'] = True
                     session['user'] = login
+                    session['sessionID'] = sessionCookie
+
                     retour = current_app.make_response(redirect('/trade'))
                     retour.delete_cookie('pass')
+                    retour.set_cookie('sessionID', sessionCookie)
                     return retour
                 else:
                     return redirect(url_for('index'))
@@ -93,50 +125,40 @@ def logout():
     session['user'] = ""
     return redirect(url_for('index'))
 
-
 @app.route("/trade", methods=['GET'])
 def trade():
-    if not session.get('logged_in'):
-        return redirect(url_for('index'))
-    else:
-        cursor = getCursor()
-        cursor.execute("SELECT * FROM currencies")
-        currencies = cursor.fetchall()
+    cursor = getCursor()
+    cursor.execute("SELECT * FROM currencies")
+    currencies = cursor.fetchall()
 
-        cursor.execute("SELECT wallet FROM users_wallet WHERE login = '" + session['user'] + "'")
-        param = cursor.fetchone()
+    cursor.execute("SELECT wallet FROM users_wallet WHERE login = '" + session['user'] + "'")
+    param = cursor.fetchone()
 
-        cursor.execute("SELECT * FROM wallet WHERE number = '" + param[0] + "'")
-        wallet = cursor.fetchall()
+    cursor.execute("SELECT * FROM wallet WHERE number = '" + param[0] + "'")
+    wallet = cursor.fetchall()
 
-        heritage = total_heritage(currencies, wallet[0])
+    heritage = total_heritage(currencies, wallet[0])
 
-        cursor.execute("SELECT * FROM ledger")
-        ledgers = cursor.fetchall()
-        return render_template('trade.html', currencies=currencies, wallet=wallet[0], total=heritage, ledgers=ledgers)
+    cursor.execute("SELECT * FROM ledger")
+    ledgers = cursor.fetchall()
+    return render_template('trade.html', currencies=currencies, wallet=wallet[0], total=heritage, ledgers=ledgers)
 
 
 @app.route("/funding", methods=['GET'])
 def funding():
-    if not session.get('logged_in'):
-        return redirect(url_for('index'))
-    else:
-        cursor = getCursor()
-        cursor.execute("SELECT wallet FROM users_wallet WHERE login = '" + session['user'] + "'")
-        param = cursor.fetchone()
+    cursor = getCursor()
+    cursor.execute("SELECT wallet FROM users_wallet WHERE login = '" + session['user'] + "'")
+    param = cursor.fetchone()
 
-        return render_template('funding.html', wallet=param[0], maxUserBTC=getBTCByWallet(getWalletByUser(session['user'])), challenge=challenge)
+    return render_template('funding.html', wallet=param[0], maxUserBTC=getBTCByWallet(getWalletByUser(session['user'])), challenge=challenge)
 
 
 @app.route("/withdraw", methods=['GET', 'POST'])
 def withdraw():
-    if not session.get('logged_in'):
-        return redirect(url_for('index'))
-    else:
-        cursor = getCursor()
-        cursor.execute("SELECT wallet FROM users_wallet WHERE login = '" + session['user'] + "'")
-        param = cursor.fetchone()
-        return render_template('withdraw.html', wallet=param[0], messages=getMessagesByUser(session['user']))
+    cursor = getCursor()
+    cursor.execute("SELECT wallet FROM users_wallet WHERE login = '" + session['user'] + "'")
+    param = cursor.fetchone()
+    return render_template('withdraw.html', wallet=param[0], messages=getMessagesByUser(session['user']))
 
 
 @app.route("/security", methods=['POST'])
@@ -190,6 +212,13 @@ def getMessagesByUser(user):
     return cursor.fetchall()
 
 
+def getAllUsers():
+    cursor = getCursor()
+    cursor.execute("SELECT * FROM users")
+
+    return cursor.fetchall()
+
+
 @app.route("/transfert", methods=['GET', 'POST'])
 def transfert():
     data = request.form
@@ -233,13 +262,13 @@ def sendMessage():
     message = data['message']
 
     re = "INSERT INTO message values ('" + getUserByWallet(sender) + "', '" + getUserByWallet(receiver) + "', '" + repr(amount) + "', '" + message + "')"
-    print(re)
     cursor = getCursor()
     cursor.execute(re)
 
     cursor.connection.commit()
 
     return redirect(url_for('withdraw'))
+
 
 @app.route("/getFactor", methods=['POST'])
 def getFactor():
