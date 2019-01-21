@@ -72,11 +72,13 @@ $clues = get_clues($db_admin, $stage);
                     </form>
                 </div>
 
+                <?php } ?>
+
                 <div class="row">
                     <p class="green"><?php echo $validation_msg;?></p>
                     <p class="red"><?php echo $err_validation_msg;?></p>
                 </div>
 
-            <?php } ?>
+
             </section>
         </div>
